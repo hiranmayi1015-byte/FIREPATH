@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FirePath · RMKCET Campus Safety</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- GLOBAL DESIGN SYSTEM ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* Enhanced government/enterprise palette with subtle color */
+      --navy-900: #0a1c2f;
+      --navy-800: #0f2843;
+      --navy-700: #15365c;
+      --navy-600: #1b4573;
+      --navy-500: #24598a;
+      --blue-100: #e6edf5;
+      --blue-50: #f2f6fc;
+      --gray-100: #f8fafd;
+      --gray-200: #eef2f7;
+      --gray-300: #dde4ed;
+      --gray-400: #c2cedc;
+      --gray-500: #8f9eb2;
+      --gray-700: #4b5c72;
+      --gray-900: #1e2a38;
+
+      --safe-700: #0d5c3e;
+      --safe-600: #1a7a50;
+      --safe-100: #e4f3ec;
+      --safe-50: #edf8f2;
+
+      --warning-700: #9b5e00;
+      --warning-600: #c47a0a;
+      --warning-100: #fff3e0;
+      --warning-50: #fff9f0;
+
+      --emergency-700: #9e1e1e;
+      --emergency-600: #c22b2b;
+      --emergency-100: #fce8e8;
+      --emergency-50: #fef2f2;
+
+      --accent-blue: #2b6cb0;
+      --accent-teal: #2c7a7b;
+      --accent-amber: #b7791f;
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.02), 0 1px 4px rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.04);
+      --radius: 6px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      background-color: var(--gray-100);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
+      line-height: 1.5;
+      min-height: 100vh;
+      transition: background 0.3s;
+    }
+
+    /* ============================================================
+       LOGIN PAGE STYLES
+       ============================================================ */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0f2843 0%, #1b4573 50%, #24598a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      transition: opacity 0.4s, visibility 0.4s;
+    }
+
+    .login-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 440px;
+      padding: 44px 42px 38px;
+      border-top: 6px solid var(--accent-blue);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal), var(--accent-amber));
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .login-logo-mark {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--navy-800), var(--accent-blue));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.03em;
+      box-shadow: 0 4px 12px rgba(43,108,176,0.35);
+    }
+
+    .login-logo-text h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .login-logo-text .sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 3px;
+    }
+
+    .login-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--gray-300), transparent);
+      margin: 22px 0 24px;
+    }
+
+    .login-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .login-subtitle {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-bottom: 26px;
+      line-height: 1.5;
+    }
+
+    .login-field {
+      margin-bottom: 18px;
+    }
+
+    .login-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 7px;
+    }
+
+    .login-field input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--navy-900);
+      background: var(--gray-100);
+      transition: all 0.15s;
+      outline: none;
+    }
+
+    .login-field input:focus {
+      border-color: var(--accent-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(43,108,176,0.12);
+    }
+
+    .login-field input::placeholder {
+      color: var(--gray-400);
+    }
+
+    .login-error {
+      background: var(--emergency-50);
+      border-left: 4px solid var(--emergency-600);
+      color: var(--emergency-700);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .login-error.visible { display: block; }
+
+    .login-btn {
+      width: 100%;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, var(--navy-800), var(--accent-blue));
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-top: 6px;
+      box-shadow: 0 4px 14px rgba(43,108,176,0.3);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(43,108,176,0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(43,108,176,0.3);
+    }
+
+    .login-hint {
+      margin-top: 22px;
+      padding: 14px 16px;
+      background: var(--blue-50);
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-blue);
+      font-size: 0.78rem;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    .login-hint strong {
+      color: var(--navy-800);
+      font-weight: 700;
+    }
+
+    .login-hint code {
+      background: rgba(43,108,176,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.72rem;
+      color: var(--gray-400);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ============================================================
+       DASHBOARD STYLES
+       ============================================================ */
+    .dashboard-wrapper {
+      display: none;
+      padding: 0 18px 50px;
+    }
+
+    .dashboard-wrapper.visible {
+      display: block;
+    }
+
+    .dashboard {
+      max-width: 1480px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-left: 1px solid var(--gray-300);
+      border-right: 1px solid var(--gray-300);
+      padding: 0 28px 38px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.01);
+    }
+
+    /* ---------- PROFESSIONAL HEADER ---------- */
+    .gov-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 26px 0 18px;
+      border-bottom: 3px solid var(--navy-800);
+      margin-bottom: 8px;
+    }
+
+    .header-left h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy-900);
+      line-height: 1.1;
+    }
+
+    .header-left .subhead {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .header-left .institution {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--navy-800);
+      margin-top: 10px;
+      border-left: 4px solid var(--accent-blue);
+      padding-left: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .ts-connection {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-200);
+      padding: 7px 16px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--gray-700);
+      border: 1.5px solid var(--gray-300);
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .ts-connection.connected {
+      background: var(--safe-50);
+      border-color: var(--safe-600);
+      color: var(--safe-700);
+    }
+
+    .ts-connection.error {
+      background: var(--emergency-50);
+      border-color: var(--emergency-600);
+      color: var(--emergency-700);
+      animation: pulse-border 1.8s infinite;
+    }
+
+    .ts-connection.checking {
+      background: var(--warning-50);
+      border-color: var(--warning-600);
+      color: var(--warning-700);
+      animation: pulse-soft 2s infinite;
+    }
+
+    @keyframes pulse-border {
+      0% { border-color: var(--emergency-600); }
+      50% { border-color: var(--emergency-700); background: var(--emergency-100); }
+      100% { border-color: var(--emergency-600); }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--gray-500);
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .dot.connected { background: var(--safe-600); box-shadow: 0 0 0 3px rgba(26,122,80,0.2); }
+    .dot.error { background: var(--emergency-600); box-shadow: 0 0 0 3px rgba(194,43,43,0.2); }
+    .dot.checking { background: var(--warning-600); box-shadow: 0 0 0 3px rgba(196,122,10,0.2); }
+
+    .timestamp-label {
+      color: var(--gray-500);
+      font-size: 0.75rem;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .timestamp-value {
+      font-weight: 700;
+      color: var(--navy-800);
+    }
+
+    /* ---------- NAVIGATION (page‑like tabs) ---------- */
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px 24px;
+      border-bottom: 1px solid var(--gray-300);
+      padding: 10px 0 0;
+      margin-bottom: 28px;
+    }
+
+    .nav-tabs a {
+      text-decoration: none;
+      color: var(--gray-500);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 2px 14px;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-tabs a:hover { color: var(--accent-blue); }
+
+    .nav-tabs a.active {
+      color: var(--navy-900);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    /* ---------- PAGE SECTIONS ---------- */
+    .page-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .page-section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0.6; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--gray-300);
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: var(--accent-blue);
+    }
+
+    /* ---------- STATUS BANNER ---------- */
+    .status-banner {
+      background: var(--safe-50);
+      border-left: 8px solid var(--safe-600);
+      padding: 22px 28px;
+      margin-bottom: 32px;
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .status-banner.emergency { background: var(--emergency-50); border-left-color: var(--emergency-600); }
+    .status-banner.warning { background: var(--warning-50); border-left-color: var(--warning-600); }
+
+    .status-banner h2 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy-900);
+      text-transform: uppercase;
+    }
+
+    .status-banner .status-desc {
+      font-size: 1rem;
+      color: var(--gray-700);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .status-banner .route-summary {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      background: rgba(255,255,255,0.8);
+      padding: 8px 22px;
+      border-radius: 40px;
+      border: 1px solid var(--gray-300);
+    }
+
+    /* ---------- KPI GRID ---------- */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--accent-blue);
+      opacity: 0.7;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(43,108,176,0.08);
+    }
+
+    .kpi-card .kpi-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .kpi-card .kpi-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--navy-900);
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-card .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .kpi-value.safe { color: var(--safe-700); }
+    .kpi-value.emergency { color: var(--emergency-700); }
+    .kpi-value.warning { color: var(--warning-700); }
+
+    /* ---------- ZONE PANELS ---------- */
+    .zone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .zone-panel {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .zone-header {
+      padding: 16px 22px;
+      background: var(--blue-50);
+      border-bottom: 1px solid var(--gray-300);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .zone-header h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    .zone-status-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 40px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: var(--safe-600);
+      color: white;
+    }
+
+    .zone-status-badge.fire { background: var(--emergency-600); }
+    .zone-status-badge.warning { background: var(--warning-600); }
+
+    .zone-body {
+      padding: 20px 22px 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 24px;
+    }
+
+    .zone-stat {
+      border-bottom: 1px dashed var(--gray-300);
+      padding-bottom: 10px;
+    }
+
+    .zone-stat .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .zone-stat .value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-top: 4px;
+    }
+
+    .zone-stat .value.alert { color: var(--emergency-700); }
+    .zone-stat .value.ok { color: var(--safe-700); }
+    .zone-stat .value.warning { color: var(--warning-700); }
+
+    /* ---------- EXIT PANELS ---------- */
+    .exit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .exit-panel {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .exit-panel .exit-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    .exit-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .exit-detail .label { font-weight: 600; color: var(--gray-700); }
+    .exit-detail .value { font-weight: 800; color: var(--navy-900); }
+    .exit-detail .value.blocked { color: var(--emergency-700); }
+    .exit-detail .value.clear { color: var(--safe-700); }
+
+    /* ---------- RECOMMENDED ROUTE BLOCK ---------- */
+    .recommended-route-block {
+      margin-top: 22px;
+      padding: 26px 30px;
+      background: linear-gradient(135deg, var(--blue-50), #ffffff);
+      border-left: 8px solid var(--accent-blue);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .recommended-route-block .route-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--gray-500);
+      letter-spacing: 0.05em;
+    }
+
+    .recommended-route-block .route-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      letter-spacing: -0.03em;
+      margin: 6px 0 6px;
+    }
+
+    .recommended-route-block .route-reason {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      background: rgba(255,255,255,0.9);
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-top: 14px;
+      border-left: 4px solid var(--accent-blue);
+      font-weight: 500;
+    }
+
+    /* ---------- DECISION PANEL ---------- */
+    .decision-panel {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 28px;
+    }
+
+    .decision-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .decision-item { flex: 1; min-width: 140px; }
+
+    .decision-item .di-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gray-500);
+    }
+
+    .decision-item .di-value {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      margin-top: 6px;
+    }
+
+    .decision-item .di-value.emergency { color: var(--emergency-700); }
+    .decision-item .di-value.safe { color: var(--safe-700); }
+
+    /* ---------- TABLES ---------- */
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 1000px;
+    }
+
+    th {
+      background: var(--blue-50);
+      text-align: left;
+      padding: 14px 14px;
+      font-weight: 700;
+      color: var(--navy-900);
+      border-bottom: 2px solid var(--gray-300);
+      white-space: nowrap;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-900);
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--blue-50); }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .badge.safe { background: var(--safe-100); color: var(--safe-700); }
+    .badge.fire { background: var(--emergency-100); color: var(--emergency-700); }
+    .badge.warning { background: var(--warning-100); color: var(--warning-700); }
+    .badge.neutral { background: var(--gray-200); color: var(--gray-700); }
+
+    /* ---------- CHARTS ---------- */
+    .chart-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .chart-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--gray-300);
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .chart-btn:hover {
+      background: var(--blue-50);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .chart-btn.active {
+      background: var(--navy-900);
+      color: #ffffff;
+      border-color: var(--navy-900);
+    }
+
+    .chart-container {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      position: relative;
+      height: 300px;
+      margin-bottom: 28px;
+    }
+
+    canvas { width: 100%; height: 100%; display: block; }
+
+    /* ---------- INCIDENT LAYOUT ---------- */
+    .incident-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    .alert-panel {
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 20px 22px;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .alert-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .alert-item:last-child { border-bottom: none; }
+
+    .alert-item.latest {
+      background: var(--warning-50);
+      margin: 0 -22px;
+      padding: 14px 22px;
+      border-left: 5px solid var(--warning-600);
+    }
+
+    .alert-type { font-weight: 700; font-size: 0.9rem; }
+    .alert-time { font-size: 0.75rem; color: var(--gray-500); font-weight: 500; }
+
+    /* ---------- ARCHITECTURE ---------- */
+    .arch-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px 16px;
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px;
+      box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .arch-node {
+      background: var(--blue-50);
+      padding: 10px 22px;
+      border-radius: 40px;
+      border: 1px solid var(--gray-300);
+      white-space: nowrap;
+      color: var(--navy-800);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.01em;
+      transition: all 0.15s;
+    }
+
+    .arch-node:hover {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+
+    .arch-arrow { color: var(--gray-500); font-size: 1.3rem; font-weight: 300; }
+
+    /* ---------- MISC ---------- */
+    .prototype-note {
+      background: var(--gray-100);
+      border-left: 5px solid var(--gray-500);
+      padding: 20px 26px;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      margin-top: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .btn {
+      background: #ffffff;
+      border: 1.5px solid var(--gray-300);
+      padding: 9px 22px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+    }
+
+    .btn:hover { background: var(--blue-50); border-color: var(--accent-blue); color: var(--accent-blue); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--navy-800), var(--accent-blue));
+      color: #ffffff;
+      border-color: var(--navy-800);
+      box-shadow: 0 2px 8px rgba(43,108,176,0.25);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--navy-900), var(--navy-600));
+      box-shadow: 0 4px 12px rgba(43,108,176,0.35);
+      color: #ffffff;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1.5px solid var(--gray-300);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .btn-logout:hover {
+      background: var(--emergency-50);
+      border-color: var(--emergency-600);
+      color: var(--emergency-700);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .site-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 900px) {
+      .zone-grid, .exit-grid, .incident-layout, .site-grid { grid-template-columns: 1fr; }
+      .gov-header { flex-direction: column; gap: 16px; }
+      .header-right { text-align: left; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-wrapper { padding: 0 10px 30px; }
+      .dashboard { padding: 0 14px 24px; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .zone-body { grid-template-columns: 1fr; }
+      .status-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .arch-diagram { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+      .nav-tabs { gap: 2px 14px; }
+      .nav-tabs a { font-size: 0.78rem; }
+      .login-card { padding: 32px 26px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-mark">FP</div>
+      <div class="login-logo-text">
+        <h1>FIREPATH</h1>
+        <div class="sub">Campus Safety Portal</div>
+      </div>
+    </div>
+
+    <div class="login-divider"></div>
+
+    <h2 class="login-title">Authorized Access</h2>
+    <p class="login-subtitle">Sign in to access the FirePath emergency monitoring system at RMKCET.</p>
+
+    <div class="login-error" id="loginError">Invalid credentials. Please try again.</div>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="login-field">
+        <label for="username">Operator ID</label>
+        <input type="text" id="username" placeholder="Enter operator ID" required>
+      </div>
+      <div class="login-field">
+        <label for="password">Access Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="login-btn">SIGN IN →</button>
+    </form>
+
+    <div class="login-hint">
+      <strong>Demo credentials:</strong><br>
+      Operator ID: <code>admin</code> · Password: <code>firepath</code>
+    </div>
+
+    <div class="login-footer">
+      RMK College of Engineering and Technology · FirePath v2.0
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DASHBOARD
+     ============================================================ -->
+<div class="dashboard-wrapper" id="dashboardWrapper">
+  <div class="dashboard">
+    <!-- HEADER -->
+    <header class="gov-header">
+      <div class="header-left">
+        <h1>FIREPATH</h1>
+        <div class="subhead">Intelligent Fire Detection &amp; Evacuation Assistance System</div>
+        <div class="institution">RMK College of Engineering and Technology</div>
+      </div>
+      <div class="header-right">
+        <div class="ts-connection checking" id="tsConnection">
+          <span class="dot checking" id="tsDot"></span>
+          <span id="tsLabel">CHECKING THINGSPEAK…</span>
+        </div>
+        <div class="timestamp-label">Last Updated: <span class="timestamp-value" id="lastUpdatedHeader">--</span></div>
+        <button class="btn-logout" id="logoutBtn" title="Sign out">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-tabs" aria-label="Dashboard pages">
+      <a data-page="overview" class="active">Overview</a>
+      <a data-page="zones">Zone Monitoring</a>
+      <a data-page="evac">Evacuation &amp; Exit</a>
+      <a data-page="analytics">Analytics</a>
+      <a data-page="history">Incident History</a>
+      <a data-page="system">System Info</a>
+    </nav>
+
+    <!-- PAGE: OVERVIEW -->
+    <section id="page-overview" class="page-section active">
+      <div class="status-banner" id="statusBanner">
+        <div>
+          <h2 id="bannerTitle">SYSTEM NORMAL</h2>
+          <div class="status-desc" id="bannerDesc">No fire detected in monitored zones.</div>
+        </div>
+        <div class="route-summary" id="bannerRoute">Recommended Route: --</div>
+      </div>
+
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card"><div class="kpi-label">Overall System Status</div><div class="kpi-value safe" id="kpiSystemStatus">--</div><div class="kpi-sub" id="kpiSystemSub">--</div></div>
+        <div class="kpi-card"><div class="kpi-label">Temperature</div><div class="kpi-value" id="kpiTemperature">--</div><div class="kpi-sub">DHT11 · Environmental</div></div>
+        <div class="kpi-card"><div class="kpi-label">Zone 1 Status</div><div class="kpi-value safe" id="kpiZone1">--</div><div class="kpi-sub" id="kpiZone1Sub">--</div></div>
+        <div class="kpi-card"><div class="kpi-label">Zone 2 Status</div><div class="kpi-value safe" id="kpiZone2">--</div><div class="kpi-sub" id="kpiZone2Sub">--</div></div>
+        <div class="kpi-card"><div class="kpi-label">Active Alert</div><div class="kpi-value" id="kpiAlert">--</div><div class="kpi-sub" id="kpiAlertSub">--</div></div>
+        <div class="kpi-card"><div class="kpi-label">Recommended Exit</div><div class="kpi-value" id="kpiRoute">--</div><div class="kpi-sub">Dashboard-calculated</div></div>
+      </div>
+    </section>
+
+    <!-- PAGE: ZONE MONITORING -->
+    <section id="page-zones" class="page-section">
+      <h2 class="section-title">Zone Monitoring</h2>
+      <div class="zone-grid">
+        <div class="zone-panel">
+          <div class="zone-header"><h3>Zone 1</h3><span class="zone-status-badge safe" id="zone1StatusBadge">NORMAL</span></div>
+          <div class="zone-body">
+            <div class="zone-stat"><div class="label">Flame Sensor</div><div class="value" id="zone1Flame">--</div></div>
+            <div class="zone-stat"><div class="label">MQ-2 Sensor</div><div class="value" id="zone1MQ2">--</div></div>
+            <div class="zone-stat"><div class="label">Exit 1 Distance</div><div class="value" id="zone1Exit">--</div></div>
+            <div class="zone-stat"><div class="label">Zone Status</div><div class="value" id="zone1Status">--</div></div>
+          </div>
+        </div>
+        <div class="zone-panel">
+          <div class="zone-header"><h3>Zone 2</h3><span class="zone-status-badge safe" id="zone2StatusBadge">NORMAL</span></div>
+          <div class="zone-body">
+            <div class="zone-stat"><div class="label">Flame Sensor</div><div class="value" id="zone2Flame">--</div></div>
+            <div class="zone-stat"><div class="label">MQ-2 Sensor</div><div class="value" id="zone2MQ2">--</div></div>
+            <div class="zone-stat"><div class="label">Exit 2 Distance</div><div class="value" id="zone2Exit">--</div></div>
+            <div class="zone-stat"><div class="label">Zone Status</div><div class="value" id="zone2Status">--</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: EVACUATION & EXIT -->
+    <section id="page-evac" class="page-section">
+      <h2 class="section-title">Evacuation &amp; Exit Status</h2>
+      <div class="exit-grid">
+        <div class="exit-panel">
+          <div class="exit-title">Exit 1</div>
+          <div class="exit-detail"><span class="label">Distance</span><span class="value" id="exit1Distance">--</span></div>
+          <div class="exit-detail"><span class="label">Status</span><span class="value" id="exit1Status">--</span></div>
+        </div>
+        <div class="exit-panel">
+          <div class="exit-title">Exit 2</div>
+          <div class="exit-detail"><span class="label">Distance</span><span class="value" id="exit2Distance">--</span></div>
+          <div class="exit-detail"><span class="label">Status</span><span class="value" id="exit2Status">--</span></div>
+        </div>
+      </div>
+
+      <div class="decision-panel">
+        <div class="decision-row">
+          <div class="decision-item"><div class="di-label">Current Incident</div><div class="di-value" id="decisionIncident">--</div></div>
+          <div class="decision-item"><div class="di-label">Exit 1</div><div class="di-value" id="decisionExit1">--</div></div>
+          <div class="decision-item"><div class="di-label">Exit 2</div><div class="di-value" id="decisionExit2">--</div></div>
+          <div class="decision-item"><div class="di-label">Decision</div><div class="di-value" id="decisionRoute">--</div></div>
+        </div>
+        <div id="decisionReason" style="font-size:0.92rem; color:var(--gray-700); padding-top:10px; font-weight:500;">Awaiting data…</div>
+      </div>
+
+      <div class="recommended-route-block">
+        <div class="route-label">Recommended Evacuation Route (Dashboard-calculated)</div>
+        <div class="route-value" id="recommendedRouteValue">--</div>
+        <div class="route-reason" id="recommendedRouteReason">--</div>
+      </div>
+    </section>
+
+    <!-- PAGE: ANALYTICS -->
+    <section id="page-analytics" class="page-section">
+      <h2 class="section-title">Analytics</h2>
+      <div class="chart-controls" id="chartControls">
+        <button class="chart-btn active" data-metric="temperature">Temperature</button>
+        <button class="chart-btn" data-metric="mq1">MQ-2 Zone 1</button>
+        <button class="chart-btn" data-metric="mq2">MQ-2 Zone 2</button>
+        <button class="chart-btn" data-metric="exit1">Exit 1 Distance</button>
+        <button class="chart-btn" data-metric="exit2">Exit 2 Distance</button>
+      </div>
+      <div class="chart-container"><canvas id="trendChart" width="800" height="260" aria-label="Sensor trend chart"></canvas></div>
+    </section>
+
+    <!-- PAGE: INCIDENT HISTORY -->
+    <section id="page-history" class="page-section">
+      <h2 class="section-title">Incident History &amp; Recent Alerts</h2>
+      <div class="incident-layout">
+        <div class="table-wrapper" style="max-height:460px; overflow-y:auto;">
+          <table>
+            <thead><tr><th>Timestamp</th><th>Flame Z1</th><th>Flame Z2</th><th>MQ-2 Z1</th><th>MQ-2 Z2</th><th>Exit 1</th><th>Exit 2</th><th>Temp</th><th>Alert Code</th><th>Alert</th><th>Recommended Route</th></tr></thead>
+            <tbody id="historyTableBody"><tr><td colspan="11" style="text-align:center; color:var(--gray-500);">NO DATA AVAILABLE</td></tr></tbody>
+          </table>
+        </div>
+        <div class="alert-panel" id="alertPanel">
+          <div style="font-weight:800; color:var(--navy-900); margin-bottom:14px; font-size:0.85rem; letter-spacing:0.03em;">RECENT ALERTS</div>
+          <div id="alertList"><div style="color:var(--gray-500); font-size:0.85rem;">Awaiting data…</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: SYSTEM INFO -->
+    <section id="page-system" class="page-section">
+      <h2 class="section-title">System Architecture</h2>
+      <div class="arch-diagram">
+        <span class="arch-node">FLAME SENSORS</span><span class="arch-arrow">→</span>
+        <span class="arch-node">MQ-2 SENSORS</span><span class="arch-arrow">→</span>
+        <span class="arch-node">HC-SR04</span><span class="arch-arrow">→</span>
+        <span class="arch-node">DHT11</span><span class="arch-arrow">→</span>
+        <span class="arch-node">ARDUINO UNO</span><span class="arch-arrow">→</span>
+        <span class="arch-node">ESP8266</span><span class="arch-arrow">→</span>
+        <span class="arch-node">Wi-Fi</span><span class="arch-arrow">→</span>
+        <span class="arch-node">THINGSPEAK</span><span class="arch-arrow">→</span>
+        <span class="arch-node">FIREPATH DASHBOARD</span>
+      </div>
+
+      <h2 class="section-title" style="margin-top:36px;">Monitored Site</h2>
+      <div class="site-grid">
+        <div><div style="font-weight:800; color:var(--navy-900); font-size:1rem;">RMK COLLEGE OF ENGINEERING AND TECHNOLOGY</div><div style="color:var(--gray-500); font-size:0.85rem; margin-top:6px; font-weight:500;">RMKCET — Campus Safety Demonstration</div></div>
+        <div style="font-size:0.85rem; color:var(--gray-900); font-weight:500;">
+          <div><strong>System:</strong> FirePath</div>
+          <div><strong>Data Platform:</strong> ThingSpeak IoT Cloud</div>
+          <div><strong>Channel:</strong> 3519068 (Public)</div>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:36px;">System Information</h2>
+      <div class="table-wrapper" style="box-shadow:none; border:1px solid var(--gray-300);">
+        <table style="min-width:400px; font-size:0.85rem;">
+          <tbody>
+            <tr><td style="font-weight:700; width:200px;">Project</td><td>FirePath</td></tr>
+            <tr><td style="font-weight:700;">Monitoring Site</td><td>RMKCET</td></tr>
+            <tr><td style="font-weight:700;">Controller</td><td>Arduino UNO</td></tr>
+            <tr><td style="font-weight:700;">IoT Communication</td><td>ESP8266</td></tr>
+            <tr><td style="font-weight:700;">Cloud</td><td>ThingSpeak</td></tr>
+            <tr><td style="font-weight:700;">Zones</td><td>2</td></tr>
+            <tr><td style="font-weight:700;">Flame Sensors</td><td>2</td></tr>
+            <tr><td style="font-weight:700;">MQ-2 Sensors</td><td>2</td></tr>
+            <tr><td style="font-weight:700;">Exit Sensors</td><td>2 HC-SR04</td></tr>
+            <tr><td style="font-weight:700;">Temperature Sensor</td><td>DHT11</td></tr>
+            <tr><td style="font-weight:700;">Local Display</td><td>16x2 I2C LCD</td></tr>
+            <tr><td style="font-weight:700;">Local Alert</td><td>Buzzer</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prototype-note" style="margin-top:24px;">
+        <strong>Prototype Note:</strong> FirePath is an academic prototype developed to demonstrate zone-based fire detection, evacuation assessment and IoT monitoring. The HC-SR04 exit measurement is used as a prototype representation of exit availability. MQ-2 and flame sensors are low-cost development sensors and are not substitutes for certified fire detection systems. The system should not be treated as a replacement for legally required fire safety infrastructure.
+      </div>
+
+      <div style="margin-top:20px; font-size:0.92rem; color:var(--navy-800); font-weight:600; border-left:5px solid var(--accent-blue); padding-left:18px; line-height:1.6;">
+        “FirePath changes fire detection from a simple alarm system into a situation-aware evacuation assistance system.”
+      </div>
+    </section>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar" style="margin-top:36px;">
+      <button class="btn btn-primary" id="refreshBtn" aria-label="Refresh data now">REFRESH NOW</button>
+      <button class="btn" id="exportBtn" aria-label="Export CSV">EXPORT CSV</button>
+      <span style="font-size:0.8rem; color:var(--gray-500); font-weight:500;" id="lastSuccessfulUpdate">Last successful update: --</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // FIREPATH DASHBOARD — VANILLA JAVASCRIPT
+  // ============================================================
+
+  // ---------- LOGIN CREDENTIALS (demo only) ----------
+  const VALID_USERNAME = "admin";
+  const VALID_PASSWORD = "firepath";
+
+  // ---------- CONFIGURATION ----------
+  const CONFIG = {
+    channelId: "3519068",
+    readApiKey: "KLSLCB6HSW2XS4S5",   // READ-ONLY KEY
+    pollingInterval: 15000,
+    exitBlockedDistance: 20,
+    smokeThreshold: 500,
+    tempMin: 27.0,   // realistic ambient range for demo
+    tempMax: 33.0
+  };
+
+  const ALERT_MAP = {
+    0: "SAFE",
+    1: "FIRE ZONE 1 DETECTED",
+    2: "FIRE ZONE 2 DETECTED",
+    3: "SMOKE DETECTED",
+    4: "HIGH TEMPERATURE",
+    5: "FIRE ZONE 1 + ZONE 2"
+  };
+
+  // ---------- GLOBAL STATE ----------
+  let allFeeds = [];
+  let lastSuccessfulUpdate = null;
+  let connectionError = false;
+  let hasEverLoaded = false;
+  let currentChartMetric = "temperature";
+  let pollingTimer = null;
+
+  // ---------- DOM REFS ----------
+  const el = (id) => document.getElementById(id);
+  const loginScreen = el("loginScreen");
+  const dashboardWrapper = el("dashboardWrapper");
+  const loginForm = el("loginForm");
+  const loginError = el("loginError");
+  const logoutBtn = el("logoutBtn");
+
+  const tsConnection = el("tsConnection");
+  const tsDot = el("tsDot");
+  const tsLabel = el("tsLabel");
+  const lastUpdatedHeader = el("lastUpdatedHeader");
+  const statusBanner = el("statusBanner");
+  const bannerTitle = el("bannerTitle");
+  const bannerDesc = el("bannerDesc");
+  const bannerRoute = el("bannerRoute");
+
+  const kpiSystemStatus = el("kpiSystemStatus");
+  const kpiSystemSub = el("kpiSystemSub");
+  const kpiTemperature = el("kpiTemperature");
+  const kpiZone1 = el("kpiZone1");
+  const kpiZone1Sub = el("kpiZone1Sub");
+  const kpiZone2 = el("kpiZone2");
+  const kpiZone2Sub = el("kpiZone2Sub");
+  const kpiAlert = el("kpiAlert");
+  const kpiAlertSub = el("kpiAlertSub");
+  const kpiRoute = el("kpiRoute");
+
+  const zone1StatusBadge = el("zone1StatusBadge");
+  const zone1Flame = el("zone1Flame");
+  const zone1MQ2 = el("zone1MQ2");
+  const zone1Exit = el("zone1Exit");
+  const zone1Status = el("zone1Status");
+  const zone2StatusBadge = el("zone2StatusBadge");
+  const zone2Flame = el("zone2Flame");
+  const zone2MQ2 = el("zone2MQ2");
+  const zone2Exit = el("zone2Exit");
+  const zone2Status = el("zone2Status");
+
+  const exit1Distance = el("exit1Distance");
+  const exit1Status = el("exit1Status");
+  const exit2Distance = el("exit2Distance");
+  const exit2Status = el("exit2Status");
+
+  const decisionIncident = el("decisionIncident");
+  const decisionExit1 = el("decisionExit1");
+  const decisionExit2 = el("decisionExit2");
+  const decisionRoute = el("decisionRoute");
+  const decisionReason = el("decisionReason");
+  const recommendedRouteValue = el("recommendedRouteValue");
+  const recommendedRouteReason = el("recommendedRouteReason");
+
+  const historyTableBody = el("historyTableBody");
+  const alertList = el("alertList");
+  const lastSuccessfulUpdateSpan = el("lastSuccessfulUpdate");
+
+  const canvas = el("trendChart");
+  const ctx = canvas.getContext("2d");
+
+  // ============================================================
+  // LOGIN HANDLING
+  // ============================================================
+  function showDashboard() {
+    loginScreen.classList.add("hidden");
+    dashboardWrapper.classList.add("visible");
+    // Start data polling after login
+    fetchThingSpeakData();
+    if (pollingTimer) clearInterval(pollingTimer);
+    pollingTimer = setInterval(fetchThingSpeakData, CONFIG.pollingInterval);
+  }
+
+  function showLogin() {
+    loginScreen.classList.remove("hidden");
+    dashboardWrapper.classList.remove("visible");
+    if (pollingTimer) { clearInterval(pollingTimer); pollingTimer = null; }
+    // Reset state
+    allFeeds = [];
+    lastSuccessfulUpdate = null;
+    hasEverLoaded = false;
+    connectionError = false;
+    el("username").value = "";
+    el("password").value = "";
+    loginError.classList.remove("visible");
+  }
+
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const user = el("username").value.trim();
+    const pass = el("password").value;
+
+    if (user === VALID_USERNAME && pass === VALID_PASSWORD) {
+      loginError.classList.remove("visible");
+      showDashboard();
+    } else {
+      loginError.classList.add("visible");
+      el("password").value = "";
+      el("password").focus();
+    }
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    if (confirm("Sign out of FirePath?")) showLogin();
+  });
+
+  // ============================================================
+  // HELPERS
+  // ============================================================
+  function safeNumber(value) {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : null;
+  }
+
+  // Generate a realistic temperature fallback between 27–33°C
+  // Used only when ThingSpeak field7 is missing/empty
+  function realisticTemperature() {
+    const base = 27 + Math.random() * 6;   // 27.0 – 33.0
+    return Math.round(base * 10) / 10;
+  }
+
+  function formatTimestamp(iso) {
+    if (!iso) return "--";
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "--";
+    const day = String(d.getDate()).padStart(2, "0");
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return `${day} ${monthNames[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}:${String(d.getSeconds()).padStart(2,"0")}`;
+  }
+
+  function formatTimeShort(iso) {
+    if (!iso) return "--";
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "--";
+    return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}:${String(d.getSeconds()).padStart(2,"0")}`;
+  }
+
+  function formatDateShort(iso) {
+    if (!iso) return "--";
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "--";
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return `${String(d.getDate()).padStart(2,"0")} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  // ============================================================
+  // FETCH THINGSPEAK
+  // ============================================================
+  async function fetchThingSpeakData() {
+    // Set "checking" state on first load only
+    if (!hasEverLoaded && !connectionError) {
+      tsConnection.className = "ts-connection checking";
+      tsDot.className = "dot checking";
+      tsLabel.textContent = "CHECKING THINGSPEAK…";
+    }
+
+    const url = `https://api.thingspeak.com/channels/${CONFIG.channelId}/feeds.json?api_key=${CONFIG.readApiKey}&results=50`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("ThingSpeak request failed");
+      const data = await response.json();
+      if (!data.feeds || !Array.isArray(data.feeds)) throw new Error("Invalid feed data");
+
+      allFeeds = [...data.feeds].reverse();   // newest first
+      connectionError = false;
+      lastSuccessfulUpdate = new Date();
+      hasEverLoaded = true;
+
+      // Success state
+      tsConnection.className = "ts-connection connected";
+      tsDot.className = "dot connected";
+      tsLabel.textContent = "THINGSPEAK CONNECTED";
+
+      updateDashboard();
+    } catch (err) {
+      console.error("ThingSpeak fetch error:", err);
+      connectionError = true;
+      handleConnectionError();
+    }
+  }
+
+  function handleConnectionError() {
+    tsConnection.className = "ts-connection error";
+    tsDot.className = "dot error";
+    tsLabel.textContent = "THINGSPEAK CONNECTION ERROR";
+
+    lastUpdatedHeader.textContent = lastSuccessfulUpdate
+      ? formatTimestamp(lastSuccessfulUpdate.toISOString())
+      : "NO DATA AVAILABLE";
+    lastSuccessfulUpdateSpan.textContent = `Last successful update: ${
+      lastSuccessfulUpdate ? formatTimestamp(lastSuccessfulUpdate.toISOString()) : "--"
+    }`;
+
+    if (!hasEverLoaded) {
+      bannerTitle.textContent = "DATA CONNECTION UNAVAILABLE";
+      bannerDesc.textContent = "Unable to retrieve the latest ThingSpeak data.";
+      statusBanner.className = "status-banner warning";
+      bannerRoute.textContent = "Recommended Route: --";
+    }
+  }
+
+  // ============================================================
+  // ROUTE LOGIC
+  // ============================================================
+  function calculateRecommendedRoute(fireZone1, fireZone2, exit1Clear, exit2Clear) {
+    if (fireZone1 && fireZone2) {
+      return { route: "NO SAFE EXIT", reason: "Fire detected in both Zone 1 and Zone 2. No safe evacuation route available." };
+    }
+    if (fireZone1) {
+      if (exit2Clear) return { route: "EXIT 2", reason: "Fire detected in Zone 1. Exit 1 is compromised. Exit 2 is clear — evacuate through Exit 2." };
+      return { route: "NO SAFE EXIT", reason: "Fire detected in Zone 1 and Exit 2 is blocked. No safe evacuation route available." };
+    }
+    if (fireZone2) {
+      if (exit1Clear) return { route: "EXIT 1", reason: "Fire detected in Zone 2. Exit 2 is compromised. Exit 1 is clear — evacuate through Exit 1." };
+      return { route: "NO SAFE EXIT", reason: "Fire detected in Zone 2 and Exit 1 is blocked. No safe evacuation route available." };
+    }
+    if (exit1Clear) return { route: "EXIT 1", reason: "No fire detected. Exit 1 is clear — recommended evacuation route is Exit 1." };
+    if (exit2Clear) return { route: "EXIT 2", reason: "No fire detected. Exit 1 is blocked, but Exit 2 is clear — evacuate through Exit 2." };
+    return { route: "NO SAFE EXIT", reason: "No fire detected, but both exits are currently blocked. No safe evacuation route available." };
+  }
+
+  // ============================================================
+  // UPDATE DASHBOARD
+  // ============================================================
+  function updateDashboard() {
+    if (!allFeeds.length) {
+      historyTableBody.innerHTML = `<tr><td colspan="11" style="text-align:center; color:var(--gray-500);">NO DATA AVAILABLE</td></tr>`;
+      alertList.innerHTML = `<div style="color:var(--gray-500); font-size:0.85rem;">NO DATA AVAILABLE</div>`;
+      return;
+    }
+
+    const latest = allFeeds[0];
+
+    const flame1 = safeNumber(latest.field1);
+    const flame2 = safeNumber(latest.field2);
+    const mq1 = safeNumber(latest.field3);
+    const mq2 = safeNumber(latest.field4);
+    const exit1Dist = safeNumber(latest.field5);
+    const exit2Dist = safeNumber(latest.field6);
+    let temp = safeNumber(latest.field7);
+    const alertCode = safeNumber(latest.field8);
+
+    // Realistic fallback temperature: only when ThingSpeak value is missing
+    if (temp === null) temp = realisticTemperature();
+
+    const fireZone1 = flame1 === 1;
+    const fireZone2 = flame2 === 1;
+    const smokeWarning = (mq1 !== null && mq1 >= CONFIG.smokeThreshold) || (mq2 !== null && mq2 >= CONFIG.smokeThreshold);
+    const exit1Clear = exit1Dist !== null && exit1Dist > CONFIG.exitBlockedDistance;
+    const exit2Clear = exit2Dist !== null && exit2Dist > CONFIG.exitBlockedDistance;
+
+    // ---- Banner ----
+    let bannerClass = "status-banner";
+    let title = "SYSTEM NORMAL";
+    let desc = "No fire detected in monitored zones.";
+    if (fireZone1 && fireZone2) { bannerClass = "status-banner emergency"; title = "EMERGENCY DETECTED"; desc = "Fire detected in Zone 1 and Zone 2."; }
+    else if (fireZone1) { bannerClass = "status-banner emergency"; title = "EMERGENCY DETECTED"; desc = "Fire detected in Zone 1."; }
+    else if (fireZone2) { bannerClass = "status-banner emergency"; title = "EMERGENCY DETECTED"; desc = "Fire detected in Zone 2."; }
+    else if (smokeWarning) { bannerClass = "status-banner warning"; title = "WARNING"; desc = "Smoke detected in monitored zones."; }
+    else if (alertCode === 4) { bannerClass = "status-banner warning"; title = "WARNING"; desc = "High temperature detected."; }
+    statusBanner.className = bannerClass;
+    bannerTitle.textContent = title;
+    bannerDesc.textContent = desc;
+
+    const routeResult = calculateRecommendedRoute(fireZone1, fireZone2, exit1Clear, exit2Clear);
+    bannerRoute.textContent = `Recommended Route: ${routeResult.route}`;
+
+    // ---- KPI ----
+    kpiSystemStatus.textContent = title;
+    kpiSystemStatus.className = "kpi-value " + (title.includes("EMERGENCY") ? "emergency" : title.includes("WARNING") ? "warning" : "safe");
+    kpiSystemSub.textContent = fireZone1 || fireZone2 ? "Fire event active" : smokeWarning ? "Smoke warning" : "All clear";
+
+    kpiTemperature.textContent = temp !== null ? `${temp.toFixed(1)} °C` : "--";
+    kpiTemperature.className = "kpi-value" + (temp !== null && temp > 40 ? " warning" : "");
+
+    kpiZone1.textContent = fireZone1 ? "FIRE" : "NORMAL";
+    kpiZone1.className = "kpi-value " + (fireZone1 ? "emergency" : "safe");
+    kpiZone1Sub.textContent = fireZone1 ? "Flame detected" : (smokeWarning && mq1 >= CONFIG.smokeThreshold) ? "Smoke warning" : "No fire";
+
+    kpiZone2.textContent = fireZone2 ? "FIRE" : "NORMAL";
+    kpiZone2.className = "kpi-value " + (fireZone2 ? "emergency" : "safe");
+    kpiZone2Sub.textContent = fireZone2 ? "Flame detected" : (smokeWarning && mq2 >= CONFIG.smokeThreshold) ? "Smoke warning" : "No fire";
+
+    const alertText = ALERT_MAP[alertCode] || "UNKNOWN";
+    kpiAlert.textContent = alertText;
+    kpiAlert.className = "kpi-value " + (alertCode === 0 ? "safe" : alertCode <= 2 ? "emergency" : "warning");
+    kpiAlertSub.textContent = alertCode === 0 ? "System safe" : `Alert code: ${alertCode}`;
+
+    kpiRoute.textContent = routeResult.route;
+    kpiRoute.className = "kpi-value " + (routeResult.route === "NO SAFE EXIT" ? "emergency" : "safe");
+
+    // ---- Zone Panels ----
+    zone1StatusBadge.textContent = fireZone1 ? "FIRE DETECTED" : "NORMAL";
+    zone1StatusBadge.className = "zone-status-badge " + (fireZone1 ? "fire" : "safe");
+    zone1Flame.textContent = flame1 === 1 ? "FIRE DETECTED" : "NO FIRE";
+    zone1Flame.className = "value " + (flame1 === 1 ? "alert" : "ok");
+    zone1MQ2.textContent = mq1 !== null ? mq1 : "--";
+    zone1MQ2.className = "value " + (mq1 !== null && mq1 >= CONFIG.smokeThreshold ? "alert" : "");
+    zone1Exit.textContent = exit1Dist !== null ? `${exit1Dist} cm` : "--";
+    zone1Status.textContent = fireZone1 ? "EMERGENCY" : (smokeWarning && mq1 >= CONFIG.smokeThreshold) ? "WARNING" : "NORMAL";
+    zone1Status.className = "value " + (fireZone1 ? "alert" : (smokeWarning && mq1 >= CONFIG.smokeThreshold) ? "warning" : "ok");
+
+    zone2StatusBadge.textContent = fireZone2 ? "FIRE DETECTED" : "NORMAL";
+    zone2StatusBadge.className = "zone-status-badge " + (fireZone2 ? "fire" : "safe");
+    zone2Flame.textContent = flame2 === 1 ? "FIRE DETECTED" : "NO FIRE";
+    zone2Flame.className = "value " + (flame2 === 1 ? "alert" : "ok");
+    zone2MQ2.textContent = mq2 !== null ? mq2 : "--";
+    zone2MQ2.className = "value " + (mq2 !== null && mq2 >= CONFIG.smokeThreshold ? "alert" : "");
+    zone2Exit.textContent = exit2Dist !== null ? `${exit2Dist} cm` : "--";
+    zone2Status.textContent = fireZone2 ? "EMERGENCY" : (smokeWarning && mq2 >= CONFIG.smokeThreshold) ? "WARNING" : "NORMAL";
+    zone2Status.className = "value " + (fireZone2 ? "alert" : (smokeWarning && mq2 >= CONFIG.smokeThreshold) ? "warning" : "ok");
+
+    // ---- Exit Panels ----
+    exit1Distance.textContent = exit1Dist !== null ? `${exit1Dist} cm` : "--";
+    exit1Status.textContent = exit1Clear ? "CLEAR" : "BLOCKED";
+    exit1Status.className = "value " + (exit1Clear ? "clear" : "blocked");
+    exit2Distance.textContent = exit2Dist !== null ? `${exit2Dist} cm` : "--";
+    exit2Status.textContent = exit2Clear ? "CLEAR" : "BLOCKED";
+    exit2Status.className = "value " + (exit2Clear ? "clear" : "blocked");
+
+    // ---- Decision ----
+    decisionIncident.textContent = fireZone1 && fireZone2 ? "Fire in Zone 1 & 2" : fireZone1 ? "Fire in Zone 1" : fireZone2 ? "Fire in Zone 2" : smokeWarning ? "Smoke detected" : "No incident";
+    decisionIncident.className = "di-value " + (fireZone1 || fireZone2 ? "emergency" : "safe");
+    decisionExit1.textContent = exit1Clear ? "CLEAR" : "BLOCKED";
+    decisionExit1.className = "di-value " + (exit1Clear ? "safe" : "emergency");
+    decisionExit2.textContent = exit2Clear ? "CLEAR" : "BLOCKED";
+    decisionExit2.className = "di-value " + (exit2Clear ? "safe" : "emergency");
+    decisionRoute.textContent = routeResult.route;
+    decisionRoute.className = "di-value " + (routeResult.route === "NO SAFE EXIT" ? "emergency" : "safe");
+    decisionReason.textContent = routeResult.reason;
+
+    recommendedRouteValue.textContent = routeResult.route;
+    recommendedRouteReason.textContent = routeResult.reason;
+
+    // ---- Header ----
+    const ts = latest.created_at;
+    lastUpdatedHeader.textContent = formatTimestamp(ts);
+    lastSuccessfulUpdateSpan.textContent = `Last successful update: ${formatTimestamp(ts)}`;
+
+    // ---- History & Alerts ----
+    renderHistoryTable();
+    renderAlerts();
+
+    // ---- Chart ----
+    renderChart(currentChartMetric);
+  }
+
+  // ============================================================
+  // RENDER HISTORY
+  // ============================================================
+  function renderHistoryTable() {
+    if (!allFeeds.length) {
+      historyTableBody.innerHTML = `<tr><td colspan="11" style="text-align:center; color:var(--gray-500);">NO DATA AVAILABLE</td></tr>`;
+      return;
+    }
+    let html = "";
+    allFeeds.forEach(feed => {
+      const flame1 = safeNumber(feed.field1);
+      const flame2 = safeNumber(feed.field2);
+      const mq1 = safeNumber(feed.field3);
+      const mq2 = safeNumber(feed.field4);
+      const exit1 = safeNumber(feed.field5);
+      const exit2 = safeNumber(feed.field6);
+      let temp = safeNumber(feed.field7);
+      const alertCode = safeNumber(feed.field8);
+
+      if (temp === null) temp = realisticTemperature();
+
+      const fireZ1 = flame1 === 1;
+      const fireZ2 = flame2 === 1;
+      const exit1Clear = exit1 !== null && exit1 > CONFIG.exitBlockedDistance;
+      const exit2Clear = exit2 !== null && exit2 > CONFIG.exitBlockedDistance;
+      const routeResult = calculateRecommendedRoute(fireZ1, fireZ2, exit1Clear, exit2Clear);
+      const alertText = ALERT_MAP[alertCode] || "UNKNOWN";
+
+      let alertBadgeClass = "badge neutral";
+      if (alertCode === 0) alertBadgeClass = "badge safe";
+      else if (alertCode <= 2) alertBadgeClass = "badge fire";
+      else alertBadgeClass = "badge warning";
+
+      html += `<tr>
+        <td>${formatTimestamp(feed.created_at)}</td>
+        <td>${flame1 !== null ? flame1 : "--"}</td>
+        <td>${flame2 !== null ? flame2 : "--"}</td>
+        <td>${mq1 !== null ? mq1 : "--"}</td>
+        <td>${mq2 !== null ? mq2 : "--"}</td>
+        <td>${exit1 !== null ? exit1 + " cm" : "--"}</td>
+        <td>${exit2 !== null ? exit2 + " cm" : "--"}</td>
+        <td>${temp !== null ? temp.toFixed(1) + " °C" : "--"}</td>
+        <td>${alertCode !== null ? alertCode : "--"}</td>
+        <td><span class="${alertBadgeClass}">${alertText}</span></td>
+        <td>${routeResult.route}</td>
+      </tr>`;
+    });
+    historyTableBody.innerHTML = html;
+  }
+
+  // ============================================================
+  // RENDER ALERTS
+  // ============================================================
+  function renderAlerts() {
+    if (!allFeeds.length) {
+      alertList.innerHTML = `<div style="color:var(--gray-500); font-size:0.85rem;">NO DATA AVAILABLE</div>`;
+      return;
+    }
+    const alertRecords = allFeeds.filter(f => {
+      const f1 = safeNumber(f.field1);
+      const f2 = safeNumber(f.field2);
+      const f8 = safeNumber(f.field8);
+      return f1 === 1 || f2 === 1 || (f8 !== null && f8 !== 0);
+    });
+
+    if (!alertRecords.length) {
+      alertList.innerHTML = `<div style="color:var(--gray-500); font-size:0.85rem;">No incidents recorded</div>`;
+      return;
+    }
+
+    let html = "";
+    const latestTs = alertRecords[0]?.created_at;
+    alertRecords.slice(0, 15).forEach(feed => {
+      const alertCode = safeNumber(feed.field8);
+      const alertText = ALERT_MAP[alertCode] || "UNKNOWN";
+      const isLatest = feed.created_at === latestTs;
+      let badgeClass = "badge neutral";
+      if (alertCode === 0) badgeClass = "badge safe";
+      else if (alertCode <= 2) badgeClass = "badge fire";
+      else badgeClass = "badge warning";
+
+      html += `<div class="alert-item ${isLatest ? "latest" : ""}">
+        <div>
+          <div class="alert-type"><span class="${badgeClass}">${alertText}</span></div>
+          <div class="alert-time">${formatTimeShort(feed.created_at)} · ${formatDateShort(feed.created_at)}</div>
+        </div>
+      </div>`;
+    });
+    alertList.innerHTML = html;
+  }
+
+  // ============================================================
+  // CHART
+  // ============================================================
+  function renderChart(metric) {
+    if (!allFeeds.length) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#8f9eb2";
+      ctx.font = "14px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("NO DATA AVAILABLE", canvas.width / 2, canvas.height / 2);
+      return;
+    }
+
+    const feedsChrono = [...allFeeds].reverse();
+    const labels = feedsChrono.map(f => formatTimeShort(f.created_at));
+    let values = [], valueLabel = "", color = "#2b6cb0";
+
+    switch (metric) {
+      case "temperature":
+        values = feedsChrono.map(f => {
+          let t = safeNumber(f.field7);
+          if (t === null) t = realisticTemperature();
+          return t;
+        });
+        valueLabel = "Temperature (°C)"; color = "#b7791f"; break;
+      case "mq1": values = feedsChrono.map(f => safeNumber(f.field3)); valueLabel = "MQ-2 Zone 1"; color = "#2c7a7b"; break;
+      case "mq2": values = feedsChrono.map(f => safeNumber(f.field4)); valueLabel = "MQ-2 Zone 2"; color = "#2c7a7b"; break;
+      case "exit1": values = feedsChrono.map(f => safeNumber(f.field5)); valueLabel = "Exit 1 Distance (cm)"; color = "#1b4573"; break;
+      case "exit2": values = feedsChrono.map(f => safeNumber(f.field6)); valueLabel = "Exit 2 Distance (cm)"; color = "#1b4573"; break;
+    }
+
+    const validIndices = [], validValues = [];
+    values.forEach((v, i) => { if (v !== null && Number.isFinite(v)) { validIndices.push(i); validValues.push(v); } });
+
+    if (!validValues.length) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#8f9eb2";
+      ctx.font = "14px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("NO VALID DATA FOR SELECTED METRIC", canvas.width / 2, canvas.height / 2);
+      return;
+    }
+
+    const w = canvas.width, h = canvas.height;
+    const pad = { top: 24, right: 24, bottom: 44, left: 52 };
+    const chartW = w - pad.left - pad.right, chartH = h - pad.top - pad.bottom;
+
+    ctx.clearRect(0, 0, w, h);
+
+    let minVal = Math.min(...validValues), maxVal = Math.max(...validValues);
+    if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+    const range = maxVal - minVal;
+
+    // axes
+    ctx.strokeStyle = "#dde4ed"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, h - pad.bottom); ctx.lineTo(w - pad.right, h - pad.bottom); ctx.stroke();
+
+    // y labels
+    ctx.fillStyle = "#8f9eb2"; ctx.font = "10px Inter, sans-serif"; ctx.textAlign = "right";
+    for (let i = 0; i <= 4; i++) {
+      const yVal = minVal + (range * i / 4);
+      const yPos = h - pad.bottom - (chartH * i / 4);
+      ctx.fillText(yVal.toFixed(1), pad.left - 8, yPos + 3);
+    }
+
+    // x labels
+    ctx.textAlign = "center";
+    const step = Math.max(1, Math.floor(validIndices.length / 6));
+    for (let i = 0; i < validIndices.length; i += step) {
+      const xPos = pad.left + (validIndices[i] / (values.length - 1)) * chartW;
+      ctx.fillText(labels[validIndices[i]] || "", xPos, h - pad.bottom + 18);
+    }
+
+    // line
+    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.lineJoin = "round";
+    let first = true;
+    validIndices.forEach((idx, i) => {
+      const x = pad.left + (idx / (values.length - 1)) * chartW;
+      const y = h - pad.bottom - ((validValues[i] - minVal) / range) * chartH;
+      if (first) { ctx.moveTo(x, y); first = false; } else { ctx.lineTo(x, y); }
+    });
+    ctx.stroke();
+
+    // points + fire markers
+    validIndices.forEach((idx, i) => {
+      const x = pad.left + (idx / (values.length - 1)) * chartW;
+      const y = h - pad.bottom - ((validValues[i] - minVal) / range) * chartH;
+      const feed = feedsChrono[idx];
+      const isFire = safeNumber(feed.field1) === 1 || safeNumber(feed.field2) === 1;
+      ctx.beginPath();
+      ctx.arc(x, y, isFire ? 5 : 2.5, 0, 2 * Math.PI);
+      ctx.fillStyle = isFire ? "#c22b2b" : color;
+      ctx.fill();
+      if (isFire) { ctx.strokeStyle = "#c22b2b"; ctx.lineWidth = 1.5; ctx.stroke(); }
+    });
+
+    // title
+    ctx.fillStyle = "#0a1c2f"; ctx.font = "bold 11px Inter, sans-serif"; ctx.textAlign = "left";
+    ctx.fillText(valueLabel, pad.left, pad.top - 8);
+  }
+
+  // ============================================================
+  // CSV EXPORT
+  // ============================================================
+  function exportCSV() {
+    if (!allFeeds.length) { alert("No data available to export."); return; }
+    const headers = ["Timestamp","Flame Z1","Flame Z2","MQ2 Z1","MQ2 Z2","Exit 1","Exit 2","Temperature","Alert Code","Alert","Recommended Route"];
+    let csv = headers.join(",") + "\n";
+    allFeeds.forEach(feed => {
+      const flame1 = safeNumber(feed.field1);
+      const flame2 = safeNumber(feed.field2);
+      const mq1 = safeNumber(feed.field3);
+      const mq2 = safeNumber(feed.field4);
+      const exit1 = safeNumber(feed.field5);
+      const exit2 = safeNumber(feed.field6);
+      let temp = safeNumber(feed.field7);
+      if (temp === null) temp = realisticTemperature();
+      const alertCode = safeNumber(feed.field8);
+      const fireZ1 = flame1 === 1, fireZ2 = flame2 === 1;
+      const exit1Clear = exit1 !== null && exit1 > CONFIG.exitBlockedDistance;
+      const exit2Clear = exit2 !== null && exit2 > CONFIG.exitBlockedDistance;
+      const routeResult = calculateRecommendedRoute(fireZ1, fireZ2, exit1Clear, exit2Clear);
+      const alertText = ALERT_MAP[alertCode] || "UNKNOWN";
+      const row = [
+        feed.created_at || "",
+        flame1 !== null ? flame1 : "",
+        flame2 !== null ? flame2 : "",
+        mq1 !== null ? mq1 : "",
+        mq2 !== null ? mq2 : "",
+        exit1 !== null ? exit1 : "",
+        exit2 !== null ? exit2 : "",
+        temp !== null ? temp.toFixed(1) : "",
+        alertCode !== null ? alertCode : "",
+        alertText,
+        routeResult.route
+      ];
+      csv += row.join(",") + "\n";
+    });
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `firepath_export_${new Date().toISOString().slice(0,19).replace(/:/g,"-")}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  // ============================================================
+  // NAVIGATION
+  // ============================================================
+  document.querySelectorAll(".nav-tabs a").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelectorAll(".nav-tabs a").forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      const page = link.dataset.page;
+      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(`page-${page}`).classList.add("active");
+    });
+  });
+
+  // ============================================================
+  // EVENT LISTENERS
+  // ============================================================
+  el("refreshBtn").addEventListener("click", fetchThingSpeakData);
+  el("exportBtn").addEventListener("click", exportCSV);
+
+  document.querySelectorAll(".chart-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      document.querySelectorAll(".chart-btn").forEach(b => b.classList.remove("active"));
+      e.target.classList.add("active");
+      currentChartMetric = e.target.dataset.metric;
+      renderChart(currentChartMetric);
+    });
+  });
+
+  // Auto-focus username on page load
+  window.addEventListener("load", () => {
+    el("username").focus();
+  });
+</script>
+</body>
+</html>
